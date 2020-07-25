@@ -12,7 +12,7 @@
     "core-js": "^3.6.5",
     "firebase": "^7.14.6",
     "google-fonts-webpack-plugin": "^0.4.4",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "node-sass": "^4.14.1",
     "reinstall-node-modules": "^2.0.0",
     "typeface-lato": "^0.0.75",
