@@ -30,6 +30,32 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/Dashboard.vue")
+  },
+
+  {
+    path: "/stafflogin",
+    name: "StaffLogin",
+
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/StaffLogin.vue")
+  },
+
+  {
+    path: "/staff",
+    name: "Staff"
+
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    // beforeEnter() {
+    //   location.href =
+    //     "https://staffdashboard.vercel.app/#/dashboard/basic-dashboard";
+    // }
+    // component: () =>
+    //   import(/* webpackChunkName: "about" */ "../views/Staff.vue")
   }
 ];
 

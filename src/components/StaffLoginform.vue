@@ -7,7 +7,7 @@
         ></v-col>
       </v-row>
       <v-card-title primary-title class="welcome"
-        ><h3>Welcome Admin,</h3></v-card-title
+        ><h3>Welcome Staff,</h3></v-card-title
       >
       <v-card-text class="form">
         <v-form>
@@ -37,7 +37,9 @@
       </v-card-text>
       <v-divider></v-divider>
       <v-card-actions>
-        <v-btn class="bt" @click="login"
+        <v-btn
+          class="bt"
+          href="https://staffdashboard.vercel.app/#/dashboard/basic-dashboard"
           ><span v-if="text">Login</span>
           <v-fade-transition leave-absolute>
             <v-progress-circular indeterminate color="white" v-if="loading">
@@ -65,7 +67,7 @@ export default {
       this.loading = true;
       setTimeout(() => {
         this.loading = false;
-        router.push({ name: "Dashboard" });
+        router.push({ name: "Staff" });
       }, 1000);
     },
   },

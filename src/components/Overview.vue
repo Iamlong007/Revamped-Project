@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-row class="ml-12 ">
+    <v-row class="ml-12 mt-3">
       <v-col cols="8"
         ><v-row
           ><v-col cols="3">
@@ -64,15 +64,18 @@
             </v-card>
           </v-col>
         </v-row>
+        <v-row>
+          <v-col cols="12"> <h2>Activities Overview</h2> </v-col>
+        </v-row>
         <v-row
           ><v-col cols="12">
-            <v-card class="chart" max-height="339" min-height="339">
+            <v-card class="chart" max-height="400" min-height="400">
               <v-row>
                 <v-col cols="7">
                   <apexchart
                     class="area"
                     type="area"
-                    height="280"
+                    height="340"
                     :options="chartOptions"
                     :series="series"
                   ></apexchart>
@@ -87,7 +90,7 @@
               </v-row>
             </v-card> </v-col
         ></v-row>
-        <v-row
+        <!-- <v-row
           ><v-col cols="3">
             <v-card>
               <v-list-item>
@@ -148,7 +151,7 @@
               </v-list-item>
             </v-card>
           </v-col>
-        </v-row>
+        </v-row> -->
       </v-col>
       <v-col cols="3" class="ml-7 mt-3">
         <v-card class="pb-5">
@@ -170,7 +173,7 @@ import RecentlyAdded from "@/components/RecentlyAdded.vue";
 
 export default {
   components: {
-    RecentlyAdded
+    RecentlyAdded,
   },
   data() {
     return {
@@ -180,57 +183,57 @@ export default {
           name: "Jacob Jackson",
           cat: "Patient",
           img: require("../assets/male4.jpg"),
-          class: "pClass"
+          class: "pClass",
         },
         {
           id: 2,
           name: "AbdulRaqeeb Andu",
           cat: "Admin",
           img: require("../assets/male3.jpg"),
-          class: "aClass"
+          class: "aClass",
         },
         {
           id: 3,
           name: "Daniel Adepoju",
           cat: "Patient",
           img: require("../assets/male2.jpg"),
-          class: "pClass"
+          class: "pClass",
         },
         {
           id: 4,
           name: "Adegbite Mariam",
           cat: "Staff",
           img: require("../assets/female1.jpg"),
-          class: "sClass"
+          class: "sClass",
         },
         {
           id: 5,
           name: "Solomon Adekunle",
           cat: "Admin",
           img: require("../assets/male6.jpg"),
-          class: "aClass"
+          class: "aClass",
         },
         {
           id: 6,
           name: "Oguntoyinbo Boluwatife",
           cat: "Patient",
           img: require("../assets/male5.png"),
-          class: "pClass"
+          class: "pClass",
         },
         {
           id: 7,
           name: "Okonkwo Peace",
           cat: "Staff",
           img: require("../assets/female6.jpeg"),
-          class: "sClass"
+          class: "sClass",
         },
         {
           id: 8,
           name: "Adekanye Dolapo",
           cat: "Staff",
           img: require("../assets/female7.jpg"),
-          class: "sClass"
-        }
+          class: "sClass",
+        },
       ],
 
       //ApexCharts Data
@@ -239,16 +242,16 @@ export default {
       series: [
         {
           name: "Patient",
-          data: [61, 70, 58, 81, 92, 109, 100]
+          data: [61, 70, 58, 81, 92, 109, 100],
         },
         {
           name: "Admin",
-          data: [11, 32, 45, 32, 34, 52, 41]
+          data: [11, 32, 45, 32, 34, 52, 41],
         },
         {
           name: "Staff",
-          data: [39, 32, 15, 22, 64, 82, 31]
-        }
+          data: [39, 32, 15, 22, 64, 82, 31],
+        },
       ],
 
       chartOptions: {
@@ -256,24 +259,24 @@ export default {
           height: 20,
           type: "area",
           toolbar: {
-            show: false
-          }
+            show: false,
+          },
         },
         colors: [
           "rgba(16, 218, 161, 0.8)",
           "rgba(254, 156, 31, 0.86)",
-          "rgba(64, 142, 240, 0.91)"
+          "rgba(64, 142, 240, 0.91)",
         ],
         dataLabels: {
-          enabled: false
+          enabled: false,
         },
         legend: {
           show: false,
-          fontFamily: "Noto Sans"
+          fontFamily: "Noto Sans",
         },
 
         stroke: {
-          curve: "smooth"
+          curve: "smooth",
         },
         xaxis: {
           categories: [
@@ -283,9 +286,9 @@ export default {
             "June",
             "July",
             "August",
-            "Sept"
-          ]
-        }
+            "Sept",
+          ],
+        },
       },
 
       // Donut Chart
@@ -294,13 +297,13 @@ export default {
 
       chartOptions2: {
         chart: {
-          type: "donut"
+          type: "donut",
         },
         labels: ["Patient", "Admin", "Staff"],
         colors: [
           "rgba(16, 218, 161, 0.8)",
           "rgba(254, 156, 31, 0.86)",
-          "rgba(64, 142, 240, 0.91)"
+          "rgba(64, 142, 240, 0.91)",
         ],
         plotOptions: {
           pie: {
@@ -308,19 +311,19 @@ export default {
               labels: {
                 show: false,
                 name: {
-                  show: false
+                  show: false,
                 },
                 value: {
-                  show: false
-                }
-              }
-            }
-          }
+                  show: false,
+                },
+              },
+            },
+          },
         },
         legend: {
           position: "bottom",
-          fontFamily: "Noto Sans"
-        }
+          fontFamily: "Noto Sans",
+        },
 
         // responsive: [
         //   {
@@ -332,9 +335,9 @@ export default {
         //     }
         //   }
         // ]
-      }
+      },
     };
-  }
+  },
 };
 </script>
 

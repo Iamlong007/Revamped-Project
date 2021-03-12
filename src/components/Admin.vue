@@ -58,7 +58,7 @@
                     () => !!age || 'Age is required',
                     () =>
                       (age && age <= 50 && age.length == 2) ||
-                      'Max 50 years old'
+                      'Max 50 years old',
                   ]"
                   height="20"
                   prepend-inner-icon="mdi-information-outline"
@@ -75,7 +75,8 @@
                   outlined
                   :rules="[
                     () => !!number || 'Phone number is required',
-                    () => (number && number.length == 11) || 'Max 11 characters'
+                    () =>
+                      (number && number.length == 11) || 'Max 11 characters',
                   ]"
                   height="20"
                   dense
@@ -197,7 +198,7 @@
 import AdminList from "@/components/AdminList.vue";
 export default {
   components: {
-    AdminList
+    AdminList,
   },
   data() {
     return {
@@ -208,7 +209,7 @@ export default {
           gender: "Male",
           userId: "J45283",
           date: "24 May 2020",
-          img: require("../assets/male3.jpg")
+          img: require("../assets/male3.jpg"),
         },
         {
           id: 2,
@@ -216,7 +217,7 @@ export default {
           gender: "Male",
           userId: "J30160",
           date: "26 May 2020",
-          img: require("../assets/Admin.jpg")
+          img: require("../assets/Admin.jpg"),
         },
         {
           id: 3,
@@ -224,7 +225,7 @@ export default {
           gender: "Male",
           userId: "J45753",
           date: "5 June 2020",
-          img: require("../assets/male4.jpg")
+          img: require("../assets/male4.jpg"),
         },
         {
           id: 4,
@@ -232,7 +233,7 @@ export default {
           gender: "Female",
           userId: "J92421",
           date: "11 June 2020",
-          img: require("../assets/female2.jpg")
+          img: require("../assets/female2.jpg"),
         },
         {
           id: 5,
@@ -240,7 +241,7 @@ export default {
           gender: "Male",
           userId: "J28231",
           date: "19 June 2020",
-          img: require("../assets/male6.jpg")
+          img: require("../assets/male6.jpg"),
         },
         {
           id: 6,
@@ -248,8 +249,8 @@ export default {
           gender: "Female",
           userId: "J37623",
           date: "24 June 2020",
-          img: require("../assets/female4.jpg")
-        }
+          img: require("../assets/female4.jpg"),
+        },
       ],
       form: false,
 
@@ -263,7 +264,7 @@ export default {
       formValidity: false,
       snackbar: false,
       loading: false,
-      text: true
+      text: true,
     };
   },
   methods: {
@@ -294,8 +295,8 @@ export default {
         this.loading = false;
         this.text = true;
       }, 2100);
-    }
-  }
+    },
+  },
 };
 </script>
 
