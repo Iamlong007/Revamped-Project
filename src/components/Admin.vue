@@ -54,12 +54,6 @@
                   id="age"
                   v-model="age"
                   outlined
-                  :rules="[
-                    () => !!age || 'Age is required',
-                    () =>
-                      (age && age <= 50 && age.length == 2) ||
-                      'Max 50 years old',
-                  ]"
                   height="20"
                   prepend-inner-icon="mdi-information-outline"
                   dense

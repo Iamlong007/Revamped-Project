@@ -17,15 +17,15 @@ export default {
   //   }
   // },
   components: {
-    LoginForm
-  }
+    LoginForm,
+  },
 };
 </script>
 
 <style scoped>
 .back {
   background: linear-gradient(0deg, rgba(10, 9, 9, 0.34), rgba(10, 9, 9, 0.34)),
-    url("~@/assets/Bg5.jpg");
+    url("~@/assets/Bg6.jpg");
   background-size: 100% 625px;
   background-repeat: no-repeat;
   height: 625px;

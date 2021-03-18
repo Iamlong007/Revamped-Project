@@ -14,7 +14,7 @@
         <v-card width="35%" class="form" v-if="form">
           <v-row>
             <v-col cols="5" class="ml-7 mt-3"
-              ><span class="formTitle">Create Admin</span></v-col
+              ><span class="formTitle">Create Patient</span></v-col
             ></v-row
           >
           <v-form class="mt-10" ref="adminForm" v-model="formValidity">
@@ -45,6 +45,19 @@
               prepend-inner-icon="mdi-home"
               class="mx-auto"
             ></v-text-field>
+            <v-text-field
+              placeholder="Enter Department"
+              name="department"
+              id="department"
+              v-model="department"
+              required
+              outlined
+              type="text"
+              height="20"
+              dense
+              prepend-inner-icon="mdi-book"
+              class="mx-auto password"
+            ></v-text-field>
             <v-row class="ageInput"
               ><v-col cols="4" class="ml-7">
                 <v-text-field
@@ -53,12 +66,6 @@
                   id="age"
                   v-model="age"
                   outlined
-                  :rules="[
-                    () => !!age || 'Age is required',
-                    () =>
-                      (age && age <= 50 && age.length == 2) ||
-                      'Max 50 years old',
-                  ]"
                   height="20"
                   prepend-inner-icon="mdi-information-outline"
                   dense
@@ -105,26 +112,11 @@
                   :rules="[() => !!userId || 'User ID is required']"
                   height="20"
                   dense
-                  @click:append="rndStr(4)"
+                  @click:append="rndStr(3)"
                 ></v-text-field
               ></v-col>
             </v-row>
-            <v-text-field
-              placeholder="Enter Password"
-              name="password"
-              id="password"
-              v-model="password"
-              :rules="[() => !!password || 'Password is required']"
-              required
-              outlined
-              :type="showPassword ? 'text' : 'password'"
-              height="20"
-              dense
-              prepend-inner-icon="mdi-lock"
-              :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-              @click:append="showPassword = !showPassword"
-              class="mx-auto password"
-            ></v-text-field>
+
             <v-divider></v-divider>
             <v-card-actions>
               <v-btn class="cancel" text @click="cancel">Cancel</v-btn>
@@ -148,7 +140,10 @@
         </v-card>
       </transition>
       <v-col cols="3"
-        ><v-btn class="ml-8 mt-3 adminBt">
+        ><v-btn
+          :class="form ? 'activeAdminBt' : 'adminBt'"
+          @click="form = !form"
+        >
           <span class="pl-2"> Create Patient </span>
           <v-icon class="ml-3 pr-2">mdi-plus-circle</v-icon></v-btn
         ></v-col
@@ -203,7 +198,7 @@ export default {
           id: 1,
           name: "AbdulRaqeeb Andu",
           gender: "Male",
-          userId: "J45283",
+          userId: "5E5545D3",
           date: "24 May 2020",
           img: require("../assets/male3.jpg"),
         },
@@ -211,7 +206,7 @@ export default {
           id: 2,
           name: "Abdul Gafar",
           gender: "Male",
-          userId: "J30160",
+          userId: "2D1545C3",
           date: "26 May 2020",
           img: require("../assets/Admin.jpg"),
         },
@@ -219,7 +214,7 @@ export default {
           id: 3,
           name: "Oguntoyinbo Boluwatife",
           gender: "Male",
-          userId: "J45753",
+          userId: "7A5545A3",
           date: "5 June 2020",
           img: require("../assets/male4.jpg"),
         },
@@ -227,7 +222,7 @@ export default {
           id: 4,
           name: "Okerekere Peace",
           gender: "Female",
-          userId: "J92421",
+          userId: "2A5545F3",
           date: "11 June 2020",
           img: require("../assets/female2.jpg"),
         },
@@ -235,7 +230,7 @@ export default {
           id: 5,
           name: "Jim-Saiki Ghalib",
           gender: "Male",
-          userId: "J28231",
+          userId: "6F5215D3",
           date: "19 June 2020",
           img: require("../assets/male6.jpg"),
         },
@@ -243,7 +238,7 @@ export default {
           id: 6,
           name: "Adegbite Omolola",
           gender: "Female",
-          userId: "J37623",
+          userId: "2E5215E3",
           date: "24 June 2020",
           img: require("../assets/female4.jpg"),
         },
@@ -256,6 +251,7 @@ export default {
       age: "",
       userId: "",
       password: "",
+      department: "",
       showPassword: false,
       formValidity: false,
       snackbar: false,
@@ -270,7 +266,7 @@ export default {
 
       for (let i = 0; i < len; i++) {
         num += chars.charAt(Math.floor(Math.random() * chars.length));
-        this.userId = "J" + num;
+        this.userId = num + "J" + num + "E";
       }
       return num;
     },
