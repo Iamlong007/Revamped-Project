@@ -2,15 +2,15 @@
   <v-col cols="6" class="mx-auto mt-8" xs="10">
     <v-card width="300" class="card" outlined elevation="10">
       <v-row>
-        <v-col cols="2" class="mx-auto"
-          ><v-img class="logo" src="../assets/unilorin_logo.jpg"></v-img
-        ></v-col>
+        <v-col cols="2" class="mx-auto">
+          <v-img class="logo" src="../assets/unilorin_logo.jpg"></v-img>
+        </v-col>
       </v-row>
       <v-card-title primary-title class="welcome"
         ><h3>Welcome Admin,</h3></v-card-title
       >
       <v-card-text class="form">
-        <v-form>
+        <!-- <v-form>
           <v-text-field
             name="name"
             label="Enter UserId"
@@ -20,9 +20,10 @@
             dense
             prepend-inner-icon="mdi-account-circle"
           ></v-text-field>
-        </v-form>
+        </v-form> -->
         <v-form>
           <v-text-field
+            v-model="password"
             name="name"
             label="Enter Password"
             id="id"
@@ -37,11 +38,10 @@
       </v-card-text>
       <v-divider></v-divider>
       <v-card-actions>
-        <v-btn class="bt" @click="login"
-          ><span v-if="text">Login</span>
+        <v-btn class="bt" @click="login">
           <v-fade-transition leave-absolute>
-            <v-progress-circular indeterminate color="white" v-if="loading">
-            </v-progress-circular>
+            <v-progress-circular v-if="loading" indeterminate color="white" />
+            <span v-else>Login</span>
           </v-fade-transition>
         </v-btn>
       </v-card-actions>
@@ -50,23 +50,38 @@
 </template>
 
 <script>
-import router from "../router";
+// import router from "../router";
 export default {
   data() {
     return {
+      password: "",
       showPassword: false,
       loading: false,
-      text: true,
     };
   },
   methods: {
     login() {
-      this.text = false;
-      this.loading = true;
-      setTimeout(() => {
-        this.loading = false;
-        router.push({ name: "Dashboard" });
-      }, 1000);
+      if (this.password.length > 0) {
+        this.loading = true;
+        setTimeout(() => {
+          try {
+            this.$auth
+              .signInWithEmailAndPassword("admin@admin.com", this.password)
+              .then((result) => {
+                // console.log(result.user);
+                this.$store.commit(
+                  "setCurrentUser",
+                  result.user.providerData[0]
+                );
+                this.$router.push({ name: "Dashboard" });
+              });
+          } catch (err) {
+            console.log(err);
+          } finally {
+            this.loading = false;
+          }
+        }, 500);
+      }
     },
   },
 };

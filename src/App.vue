@@ -33,7 +33,7 @@
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s ease-out;
+  transition: opacity 0.2s ease-out;
 }
 
 .fade-leave-to {
@@ -47,7 +47,7 @@
 
 .slide-fade-enter-active,
 .slide-fade-leave-active {
-  transition: all 0.5s ease;
+  transition: all 0.2s ease;
 }
 
 .slide-fade-leave-to {
@@ -57,7 +57,7 @@
 .show {
   display: none;
   animation-name: display;
-  animation-duration: 2s;
+  animation-duration: 0.2s;
   animation-timing-function: ease-in;
 }
 @keyframes display {

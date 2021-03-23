@@ -1,17 +1,18 @@
 <template>
   <v-row class="flex">
-    <v-col cols="1"><v-img :src="list.img" class="avatar"></v-img> </v-col
+    <v-col cols="1"
+      ><v-img :src="patient.picture" class="avatar"></v-img> </v-col
     ><v-col cols="2" class="name">
-      <span class="adminName">{{ list.name }}</span></v-col
+      <span class="adminName">{{ patient.name }}</span></v-col
     >
     <v-col cols="1" class="gender"
-      ><span class="adminName">{{ list.gender }}</span></v-col
+      ><span class="adminName">{{ patient.department }}</span></v-col
     >
     <v-col cols="1" class="userId"
-      ><span class="adminName">{{ list.userId }}</span></v-col
+      ><span class="adminName">{{ patient.rfid }}</span></v-col
     >
     <v-col cols="2" class="date"
-      ><span class="adminName">{{ list.date }}</span></v-col
+      ><span class="adminName">{{ patient.createdAt }}</span></v-col
     >
     <v-col cols="1" class="button"
       ><v-btn text
@@ -23,12 +24,12 @@
 
 <script>
 export default {
-  name: "PatientList",
+  name: "PatientItem",
   props: {
-    list: {
-      type: Object
-    }
-  }
+    patient: {
+      type: Object,
+    },
+  },
 };
 </script>
 

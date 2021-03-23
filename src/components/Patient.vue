@@ -22,8 +22,8 @@
               placeholder="Name"
               name="name"
               id="name"
-              v-model="name"
-              :rules="[() => !!name || 'Name is required']"
+              v-model="patient.name"
+              :rules="[() => !!patient.name || 'Name is required']"
               required
               outlined
               height="20"
@@ -36,9 +36,9 @@
               name="address"
               id="address"
               outlined
-              v-model="address"
+              v-model="patient.address"
               height="20"
-              :rules="[() => !!address || 'Address is required']"
+              :rules="[() => !!patient.address || 'Address is required']"
               min="18"
               max="55"
               dense
@@ -49,7 +49,7 @@
               placeholder="Enter Department"
               name="department"
               id="department"
-              v-model="department"
+              v-model="patient.department"
               required
               outlined
               type="text"
@@ -64,7 +64,7 @@
                   placeholder="Age"
                   name="age"
                   id="age"
-                  v-model="age"
+                  v-model="patient.age"
                   outlined
                   height="20"
                   prepend-inner-icon="mdi-information-outline"
@@ -76,13 +76,14 @@
                   placeholder="Phone Number"
                   name="number"
                   id="number"
-                  v-model="number"
+                  v-model="patient.phone"
                   prepend-inner-icon="mdi-cellphone-android"
                   outlined
                   :rules="[
-                    () => !!number || 'Phone number is required',
+                    () => !!patient.phone || 'Phone number is required',
                     () =>
-                      (number && number.length == 11) || 'Max 11 characters',
+                      (patient.phone && patient.phone.length == 11) ||
+                      'Max 11 characters',
                   ]"
                   height="20"
                   dense
@@ -97,6 +98,9 @@
                   prepend-icon=""
                   height="20"
                   dense
+                  accept="image/*"
+                  id="patientImage"
+                  @change="handleImage"
                   prepend-inner-icon="mdi-face"
                 ></v-file-input
               ></v-col>
@@ -105,11 +109,11 @@
                   placeholder="User ID"
                   name="User ID"
                   id="userId"
-                  v-model="userId"
+                  v-model="patient.rfid"
                   prepend-inner-icon="mdi-account-plus"
                   append-icon="mdi-rotate-right"
                   outlined
-                  :rules="[() => !!userId || 'User ID is required']"
+                  :rules="[() => !!patient.rfid || 'User ID is required']"
                   height="20"
                   dense
                   @click:append="rndStr(3)"
@@ -165,7 +169,7 @@
       >
       <v-spacer></v-spacer
       ><v-col cols="2" class="ml-10 listSubTitle"
-        ><span class="listHead2">Gender</span></v-col
+        ><span class="listHead2">Department</span></v-col
       >
       <v-spacer></v-spacer>
       <v-col cols="2" class="ml-10 listSubTitle"
@@ -176,82 +180,38 @@
         ><span class="listHead2">Date Registered</span></v-col
       >
     </v-row>
-    <PatientList
-      v-for="list in lists"
-      :key="list.id"
-      :list="list"
-      :src="list.img"
-    ></PatientList>
+    <PatientItem
+      v-for="patient in patients"
+      :key="patient.id"
+      :patient="patient"
+    ></PatientItem>
   </v-card>
 </template>
 
 <script>
-import PatientList from "@/components/PatientList.vue";
+import PatientItem from "@/components/PatientItem.vue";
 export default {
   components: {
-    PatientList,
+    PatientItem,
+  },
+  props: {
+    patients: {
+      type: Array,
+      required: true,
+    },
   },
   data() {
     return {
-      lists: [
-        {
-          id: 1,
-          name: "AbdulRaqeeb Andu",
-          gender: "Male",
-          userId: "5E5545D3",
-          date: "24 May 2020",
-          img: require("../assets/male3.jpg"),
-        },
-        {
-          id: 2,
-          name: "Abdul Gafar",
-          gender: "Male",
-          userId: "2D1545C3",
-          date: "26 May 2020",
-          img: require("../assets/Admin.jpg"),
-        },
-        {
-          id: 3,
-          name: "Oguntoyinbo Boluwatife",
-          gender: "Male",
-          userId: "7A5545A3",
-          date: "5 June 2020",
-          img: require("../assets/male4.jpg"),
-        },
-        {
-          id: 4,
-          name: "Okerekere Peace",
-          gender: "Female",
-          userId: "2A5545F3",
-          date: "11 June 2020",
-          img: require("../assets/female2.jpg"),
-        },
-        {
-          id: 5,
-          name: "Jim-Saiki Ghalib",
-          gender: "Male",
-          userId: "6F5215D3",
-          date: "19 June 2020",
-          img: require("../assets/male6.jpg"),
-        },
-        {
-          id: 6,
-          name: "Adegbite Omolola",
-          gender: "Female",
-          userId: "2E5215E3",
-          date: "24 June 2020",
-          img: require("../assets/female4.jpg"),
-        },
-      ],
       form: false,
-
-      name: "",
-      address: "",
-      number: "",
-      age: "",
-      userId: "",
-      password: "",
-      department: "",
+      patient: {
+        name: "",
+        address: "",
+        phone: "",
+        age: "",
+        rfid: "",
+        department: "",
+      },
+      uploadedImage: null,
       showPassword: false,
       formValidity: false,
       snackbar: false,
@@ -266,7 +226,7 @@ export default {
 
       for (let i = 0; i < len; i++) {
         num += chars.charAt(Math.floor(Math.random() * chars.length));
-        this.userId = num + "J" + num + "E";
+        this.patient.rfid = num + "J" + num + "E";
       }
       return num;
     },
@@ -274,25 +234,48 @@ export default {
       this.form = false;
       this.$refs.adminForm.reset();
     },
+
+    handleImage() {
+      const { 0: tempUploadedImage } = document.querySelector(
+        "#patientImage"
+      ).files;
+      if (tempUploadedImage) {
+        this.uploadedImage = {
+          image: tempUploadedImage,
+          name: tempUploadedImage.name,
+        };
+      }
+    },
     submit() {
       this.text = false;
       this.loading = true;
-
-      setTimeout(() => {
-        this.snackbar = true;
-      }, 1500);
-      setTimeout(() => {
-        this.form = false;
-        this.$refs.adminForm.reset();
-        this.loading = false;
-        this.text = true;
-      }, 2100);
+      this.$storage
+        .ref(`patients/${this.uploadedImage.name}`)
+        .put(this.uploadedImage.image)
+        .then((snapshot) => {
+          snapshot.ref.getDownloadURL().then((picture) => {
+            this.$db
+              .collection("patients")
+              .add({
+                ...this.patient,
+                picture,
+                createdAt: new Date().toDateString(),
+              })
+              .then(() => {
+                this.form = false;
+                this.$refs.adminForm.reset();
+                this.loading = false;
+                this.text = true;
+                this.snackbar = true;
+              });
+          });
+        });
     },
   },
 };
 </script>
 
-<style scoped>
+<style>
 .v-text-field {
   width: 320px !important;
 }

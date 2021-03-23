@@ -5,13 +5,13 @@
       <span class="adminName">{{ list.name }}</span></v-col
     >
     <v-col cols="1" class="gender"
-      ><span class="adminName">{{ list.gender }}</span></v-col
+      ><span class="adminName">{{ list.email }}</span></v-col
     >
     <v-col cols="1" class="userId"
-      ><span class="adminName">{{ list.userId }}</span></v-col
+      ><span class="adminName">{{ list.phone }}</span></v-col
     >
     <v-col cols="2" class="date"
-      ><span class="adminName">{{ list.date }}</span></v-col
+      ><span class="adminName">{{ list.createdAt }}</span></v-col
     >
     <v-col cols="1" class="button"
       ><v-btn text
@@ -26,9 +26,9 @@ export default {
   name: "StaffList",
   props: {
     list: {
-      type: Object
-    }
-  }
+      type: Object,
+    },
+  },
 };
 </script>
 

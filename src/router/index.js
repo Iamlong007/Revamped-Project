@@ -1,6 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import { auth } from "../firebaseConfig";
+import store from "../store/index";
 // import firebase from "firebase"
 
 Vue.use(VueRouter);
@@ -9,7 +11,7 @@ const routes = [
   {
     path: "/",
     redirect: "/login",
-    component: Home
+    component: Home,
   },
 
   {
@@ -19,7 +21,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Login.vue")
+      import(/* webpackChunkName: "about" */ "../views/Login.vue"),
   },
   {
     path: "/dashboard",
@@ -29,7 +31,10 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Dashboard.vue")
+      import(/* webpackChunkName: "about" */ "../views/Dashboard.vue"),
+    meta: {
+      requiresAuth: true,
+    },
   },
 
   {
@@ -40,12 +45,12 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/StaffLogin.vue")
+      import(/* webpackChunkName: "about" */ "../views/StaffLogin.vue"),
   },
 
   {
     path: "/staff",
-    name: "Staff"
+    name: "Staff",
 
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -56,12 +61,31 @@ const routes = [
     // }
     // component: () =>
     //   import(/* webpackChunkName: "about" */ "../views/Staff.vue")
-  }
+  },
 ];
 
 const router = new VueRouter({
   mode: "history",
-  routes
+  routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some((x) => x.meta.requiresAuth);
+  // console.log(auth.currentUser);
+  new Promise((resolve) => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        store.commit("setCurrentUser", user.providerData[0]);
+      }
+      resolve(user);
+    });
+  }).then((user) => {
+    if (requiresAuth && user == null) {
+      next("/login");
+    } else {
+      next();
+    }
+  });
 });
 
 // router.beforeEach((to, from, next) => {

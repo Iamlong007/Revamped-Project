@@ -1,10 +1,10 @@
 <template>
   <v-app>
-    <v-row>
-      <v-col cols="12" class="back">
-        <LoginForm></LoginForm>
-      </v-col>
-    </v-row>
+    <v-container fluid fill-height class="pa-0 ma-0 back">
+      <!-- <v-col cols="12" class="back"> -->
+      <LoginForm></LoginForm>
+      <!-- </v-col> -->
+    </v-container>
   </v-app>
 </template>
 
@@ -26,9 +26,8 @@ export default {
 .back {
   background: linear-gradient(0deg, rgba(10, 9, 9, 0.34), rgba(10, 9, 9, 0.34)),
     url("~@/assets/Bg6.jpg");
-  background-size: 100% 625px;
+  background-size: cover;
   background-repeat: no-repeat;
-  height: 625px;
 }
 .show {
   display: none;

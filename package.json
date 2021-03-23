@@ -10,7 +10,7 @@
   "dependencies": {
     "apexcharts": "^3.26.0",
     "core-js": "^3.9.1",
-    "firebase": "^8.2.10",
+    "firebase": "^8.3.1",
     "google-fonts-webpack-plugin": "^0.4.4",
     "lodash": "^4.17.21",
     "node-sass": "^4.14.1",
@@ -28,6 +28,7 @@
     "vue-transition-on-scroll": "^1.0.3",
     "vue-typer": "^1.2.0",
     "vue-typewriter": "^2.2.1",
+    "vuefire": "^2.2.5",
     "vuejs-datepicker": "^1.6.2",
     "vuelidate": "^0.7.6",
     "vuetify": "^2.4.7",

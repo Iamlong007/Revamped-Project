@@ -2,15 +2,17 @@
   <v-row>
     <v-row class="ml-12 mt-3">
       <v-col cols="8"
-        ><v-row
-          ><v-col cols="3">
+        ><v-row justify="space-around"
+          ><v-col cols="4">
             <v-card>
               <v-list-item>
                 <v-list-item-avatar
                   color="rgba(16, 218, 161, 0.8)"
                 ></v-list-item-avatar>
                 <v-list-item-content class="rightTxt">
-                  <v-list-item-title class="headline">572</v-list-item-title>
+                  <v-list-item-title class="headline">
+                    {{ patientsCount }}
+                  </v-list-item-title>
                   <v-list-item-subtitle class="subTxt"
                     >Total Patients</v-list-item-subtitle
                   >
@@ -18,29 +20,16 @@
               </v-list-item>
             </v-card>
           </v-col>
-          <v-col cols="3">
-            <v-card>
-              <v-list-item>
-                <v-list-item-avatar
-                  color="rgba(254, 156, 31, 0.86)"
-                ></v-list-item-avatar>
-                <v-list-item-content class="rightTxt">
-                  <v-list-item-title class="headline">12</v-list-item-title>
-                  <v-list-item-subtitle class="subTxt"
-                    >Total Admin</v-list-item-subtitle
-                  >
-                </v-list-item-content>
-              </v-list-item>
-            </v-card>
-          </v-col>
-          <v-col cols="3">
+          <v-col cols="4">
             <v-card>
               <v-list-item>
                 <v-list-item-avatar
                   color="rgba(64, 142, 240, 0.91)"
                 ></v-list-item-avatar>
                 <v-list-item-content class="rightTxt">
-                  <v-list-item-title class="headline">74</v-list-item-title>
+                  <v-list-item-title class="headline">
+                    {{ staffsCount }}
+                  </v-list-item-title>
                   <v-list-item-subtitle class="subTxt"
                     >Total Staff</v-list-item-subtitle
                   >
@@ -48,7 +37,7 @@
               </v-list-item>
             </v-card>
           </v-col>
-          <v-col cols="3">
+          <v-col cols="4">
             <v-card>
               <v-list-item>
                 <v-list-item-avatar
@@ -174,6 +163,16 @@ import RecentlyAdded from "@/components/RecentlyAdded.vue";
 export default {
   components: {
     RecentlyAdded,
+  },
+  props: {
+    patientsCount: {
+      type: Number,
+      required: true,
+    },
+    staffsCount: {
+      type: Number,
+      required: true,
+    },
   },
   data() {
     return {

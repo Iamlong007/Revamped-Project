@@ -17,7 +17,7 @@
           <span class="btTxt">Overview</span>
         </span>
       </v-btn>
-      <v-btn
+      <!-- <v-btn
         min-height="40"
         :class="admin ? 'activeAdminBt' : 'adminBt'"
         @click="button"
@@ -25,7 +25,7 @@
           <v-icon class="icon">mdi-account</v-icon>
           <span class="btTxt">Admin</span>
         </span>
-      </v-btn>
+      </v-btn> -->
       <v-btn
         min-height="40"
         :class="patient ? 'activePatientBt' : 'patientBt'"
@@ -53,7 +53,7 @@
         max-height="37"
         src="../assets/yoruba_M.jpeg"
       ></v-img>
-      <v-toolbar-title class="adminName">Abdul Gafar</v-toolbar-title>
+      <v-toolbar-title class="adminName">Admin</v-toolbar-title>
       <v-btn class="left" icon @click="nav = !nav">
         <v-icon>{{ nav ? "mdi-chevron-up" : "mdi-chevron-down" }}</v-icon>
       </v-btn>
@@ -76,10 +76,14 @@
         </v-card>
       </transition>
       <transition name="fade" mode="out-in">
-        <Overview v-if="overview"></Overview>
-        <Admin v-if="admin"></Admin>
-        <Patient v-if="patient"></Patient>
-        <Staff v-if="staff"></Staff>
+        <Overview
+          v-if="overview"
+          :patientsCount="patients.length"
+          :staffsCount="staffs.length"
+        ></Overview>
+        <!-- <Admin v-if="admin"></Admin> -->
+        <Patient v-if="patient" :patients="patients"></Patient>
+        <Staff v-if="staff" :staffs="staffs"></Staff>
       </transition>
       <!--  <typewriter
         class="type"
@@ -103,16 +107,17 @@ import Vue from "vue";
 import router from "../router";
 import VueTyper from "vue-typer";
 import Overview from "@/components/Overview.vue";
-import Admin from "@/components/Admin.vue";
+// import Admin from "@/components/Admin.vue";
 import Patient from "@/components/Patient.vue";
 import Staff from "@/components/Staff.vue";
+import { db } from "../firebaseConfig";
 Vue.use(VueTyper);
 export default {
   components: {
     Overview,
-    Admin,
+    // Admin,
     Patient,
-    Staff
+    Staff,
   },
   data() {
     return {
@@ -123,16 +128,24 @@ export default {
       overview: true,
       admin: false,
       patient: false,
-      staff: false
+      staff: false,
+      patients: [],
+      patistaffsents: [],
     };
+  },
+  firestore: {
+    patients: db.collection("patients"),
+    staffs: db.collection("staffs"),
   },
   methods: {
     logout() {
       this.text = false;
       this.loading = true;
       setTimeout(() => {
-        this.loading = false;
-        router.push({ name: "Login" });
+        this.$auth.signOut().then(() => {
+          this.loading = false;
+          router.push({ name: "Login" });
+        });
       }, 500);
     },
     button() {
@@ -158,8 +171,8 @@ export default {
       this.patient = false;
       this.overview = false;
       this.staff = true;
-    }
-  }
+    },
+  },
 };
 </script>
 
