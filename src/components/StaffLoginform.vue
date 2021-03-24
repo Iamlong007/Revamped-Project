@@ -12,6 +12,7 @@
       <v-card-text class="form">
         <v-form>
           <v-text-field
+            v-model="email"
             name="name"
             label="Enter UserId"
             id="userId"
@@ -23,6 +24,7 @@
         </v-form>
         <v-form>
           <v-text-field
+            v-model="password"
             name="name"
             label="Enter Password"
             id="id"
@@ -37,13 +39,10 @@
       </v-card-text>
       <v-divider></v-divider>
       <v-card-actions>
-        <v-btn
-          class="bt"
-          href="https://staffdashboard.vercel.app/#/dashboard/basic-dashboard"
-          ><span v-if="text">Login</span>
+        <v-btn class="bt" @click="login">
           <v-fade-transition leave-absolute>
-            <v-progress-circular indeterminate color="white" v-if="loading">
-            </v-progress-circular>
+            <v-progress-circular v-if="loading" indeterminate color="white" />
+            <span v-else>Login</span>
           </v-fade-transition>
         </v-btn>
       </v-card-actions>
@@ -52,23 +51,38 @@
 </template>
 
 <script>
-import router from "../router";
 export default {
   data() {
     return {
+      email: "",
+      password: "",
       showPassword: false,
       loading: false,
-      text: true,
     };
   },
   methods: {
     login() {
-      this.text = false;
-      this.loading = true;
-      setTimeout(() => {
-        this.loading = false;
-        router.push({ name: "Staff" });
-      }, 1000);
+      if (this.password.length > 0) {
+        this.loading = true;
+        setTimeout(() => {
+          try {
+            this.$auth
+              .signInWithEmailAndPassword(this.email, this.password)
+              .then((result) => {
+                // console.log(result.user);
+                this.$store.commit(
+                  "setCurrentUser",
+                  result.user.providerData[0]
+                );
+                this.$router.push({ name: "Staff" });
+              });
+          } catch (err) {
+            console.log(err);
+          } finally {
+            this.loading = false;
+          }
+        }, 500);
+      }
     },
   },
 };

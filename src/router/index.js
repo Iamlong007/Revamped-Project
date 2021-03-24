@@ -50,7 +50,7 @@ const routes = [
 
   {
     path: "/staff",
-    name: "Staff",
+    redirect: "/staff/dashboard",
 
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -58,9 +58,17 @@ const routes = [
     // beforeEnter() {
     //   location.href =
     //     "https://staffdashboard.vercel.app/#/dashboard/basic-dashboard";
-    // }
-    // component: () =>
-    //   import(/* webpackChunkName: "about" */ "../views/Staff.vue")
+
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../layouts/Layout"),
+    children: [
+      // Components
+      {
+        name: "Staff",
+        path: "dashboard",
+        component: () => import("@/views/Staff"),
+      },
+    ],
   },
 ];
 
